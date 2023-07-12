@@ -1,7 +1,20 @@
 import logo from "./logo.svg";
 import "./App.css";
+import axios from "axios";
+import { useState } from "react";
 
 function App() {
+  const [data, setData] = useState();
+  async function fetchData() {
+    try {
+      const res = await axios.get("http://103.74.254.195:8000");
+      setData(res);
+    } catch (err) {
+      setData(null);
+      console.log(err);
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +30,8 @@ function App() {
         >
           Learn React 5555555
         </a>
+        <button onClick={fetchData}>fetch</button>
+        {data ? <p>{data}</p> : null}
       </header>
     </div>
   );
